@@ -21,8 +21,12 @@
 	</form>
 	{% else %}
 	<h1>you article was created..</h1>
-	<a href="">see </a>
+	<ul>
+		<li>
+			<a href="{% url 'article_detail' object.id %}">{{object.title}} </a>
+		</li>
+	</ul>
 	{% endif %}
-
+	<!-- /article_detail/{{object.id}}/ -->
 </body>
 </html>

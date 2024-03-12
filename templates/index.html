@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Article post</title>
+</head>
+<body>
+	{% if not created %}
+	<form action="{% url 'article' %}" method="POST">
+		{% csrf_token %}
+		<label>Enter your title</label>
+		<input type="text" name="title">
+		<br>
+		<br>
+		<label>Enter your Content</label>
+		<input type="text" name="content">
+		<br>
+		<br>
+		<input type="submit" name="">
+	</form>
+	{% else %}
+	<h1>you article was created..</h1>
+	<a href="">see </a>
+	{% endif %}
+
+</body>
+</html>

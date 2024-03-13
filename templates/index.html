@@ -1,32 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Article post</title>
-</head>
-<body>
-	{% if not created %}
-	<form action="{% url 'article' %}" method="POST">
-		{% csrf_token %}
-		<label>Enter your title</label>
-		<input type="text" name="title">
-		<br>
-		<br>
-		<label>Enter your Content</label>
-		<input type="text" name="content">
-		<br>
-		<br>
-		<input type="submit" name="">
-	</form>
-	{% else %}
-	<h1>you article was created..</h1>
-	<ul>
-		<li>
-			<a href="{% url 'article_detail' object.id %}">{{object.title}} </a>
-		</li>
-	</ul>
-	{% endif %}
+{% extends 'base.html' %}
+
+{% block content %}
+	{% for article in articles %}
+		<ul>
+			<li>
+				<h3><a href="{% url 'article_detail' article.id %}">{{article.title }} - {article.content}}</a></h3>
+			</li>
+		</ul>
+	{% endfor %}
 	<!-- /article_detail/{{object.id}}/ -->
-</body>
-</html>
+{% endblock %}

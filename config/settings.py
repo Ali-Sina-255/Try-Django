@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -20,13 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rw*56%f#v28(!)bnzcsn1e(16hpicikg1%dqm!t$@ex^t&ek=='
+SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-rw*56%f#v28(!)bnzcsn1e(16hpicikg1%dqm!t$@ex^t&ek==')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str(os.environ.get('DEBUG')) == '1'
+
 
 ALLOWED_HOSTS = []
-
+if not DEBUG:
+    ALLOWED_HOSTS +=[os.environ.get('ALLOWED_HOST')]
 
 # Application definition
 

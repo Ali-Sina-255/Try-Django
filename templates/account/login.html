@@ -12,18 +12,9 @@
     {% endif %}
     <form action="{% url 'account:login' %}" method="POST">
         {% csrf_token %}
-        <label for="">Username</label>
-        <br>
-        <input type="text" name="username">
-        <br>
-        <br>
-
-        <label for="">Password</label>
-        <br>
-        <input type="password" name="password">
-        <br>
-        <br>
+        {{form.as_p}}
         <input type="submit">
     </form>
+    <p>Need an account please  <a href="{% url 'account:register' %}">register</a></p>
 </body>
 </html>

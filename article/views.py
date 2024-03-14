@@ -6,11 +6,11 @@ from django.http import Http404
 from django.db.models import Q
 
 def article_search_view(request, *args, **kwargs):
-    qery = request.GET.get("q")
+    query = request.GET.get("q")
     qs = Articles.objects.all()
-    if qery is not None:
-        lookups = Q(title__icontains=qery) | Q(content__icontains=qery)
-        qs = Articles.objects.filter(lookups)
+    if query is not None:
+        # lookups = Q(title__icontains=qery) | Q(content__icontains=qery)
+        qs = Articles.objects.search(query)
     context = {
         'object_list': qs
     }

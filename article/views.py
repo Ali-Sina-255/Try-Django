@@ -2,6 +2,19 @@ from django.shortcuts import render, redirect
 from . models import Articles
 from django.contrib import messages
 from . forms import ArticlesFroms
+from django.http import Http404
+from django.db.models import Q
+
+def article_search_view(request, *args, **kwargs):
+    qery = request.GET.get("q")
+    qs = Articles.objects.all()
+    if qery is not None:
+        lookups = Q(title__icontains=qery) | Q(content__icontains=qery)
+        qs = Articles.objects.filter(lookups)
+    context = {
+        'object_list': qs
+    }
+    return render(request, 'search.html', context)
 
 
 def article_create_view(request, *args, **kwargs):
@@ -40,9 +53,17 @@ def article_create_form(request, *args, **kwargs):
     return render(request, 'article_create.html', context=context)
 
 
-def article_detail_view(request, value_from_url, *args, **kargs):
-    articlce_detail = Articles.objects.get(id=value_from_url)
-
+def article_detail_view(request, slug=None, *args, **kargs):
+    articlce_detail = None
+    if slug is not None:
+        try:
+            articlce_detail = Articles.objects.get(slug=slug)
+        except Articles.DoesNotExist:
+            raise Http404
+        except Articles.MultipleObjectsReturned:
+            articlce_detail = Articles.objects.get(slug=slug).first()
+        except:
+            raise Http404
     context = {
         'articlce_detail': articlce_detail
     }

@@ -4,6 +4,8 @@
 <form action="{{objec.get_edite_url}}" method="POST">
     {% csrf_token %}
     {{form}}
+    <h1>RecipeIngredient</h1>
+    {{form_2.as_p}}
     <input type="submit">
 </form>
 

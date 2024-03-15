@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4><a href="{% url 'recipe:create' %}">Add Recipes</a></h4>
+<h3>My Recipes</h3>
+<table>
+    <tr>
+      <th>Recipes</th>
+      <th>description</th>
+      <th>direction</th>
+      <th>Add New Recipes</th>
+      <th>Update</th>
+      <th>Delete</th>
+
+    </tr>
+    {% for obj in all_recipes %}
+    <tr>
+      <td> <a href="{% url 'recipe:detail' obj.id %}"> <li>{{obj.name}}</li></a></td>
+      <td>-{{obj.description|truncatewords:8}}</td>
+      <td>{{obj.directions|truncatewords:8}}</td> 
+      <td></td>
+    <td><a href="{% url 'recipe:delete' obj.id %}">Delete</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+
+<ul>
+    {% for obj in all_recipes %}
+  
+
+    {% endfor %}
+</ul>
+{% endblock %}

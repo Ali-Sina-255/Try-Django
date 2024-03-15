@@ -10,11 +10,12 @@ def article_search_view(request, *args, **kwargs):
     qs = Articles.objects.all()
     if query is not None:
         # lookups = Q(title__icontains=qery) | Q(content__icontains=qery)
+        
         qs = Articles.objects.search(query)
     context = {
         'object_list': qs
     }
-    return render(request, 'search.html', context)
+    return render(request, 'articles/search.html', context)
 
 
 def article_create_view(request, *args, **kwargs):
@@ -30,7 +31,7 @@ def article_create_view(request, *args, **kwargs):
         context['object'] = article_object
         context['created'] = True
 
-    return render(request, 'index.html', context=context)
+    return render(request, 'articles/index.html', context=context)
 
 
 def article_create_form(request, *args, **kwargs):
@@ -50,7 +51,7 @@ def article_create_form(request, *args, **kwargs):
             context['object'] = article_object
         else:
             print(forms.error)
-    return render(request, 'article_create.html', context=context)
+    return render(request, 'articles/article_create.html', context=context)
 
 
 def article_detail_view(request, slug=None, *args, **kargs):
@@ -67,7 +68,7 @@ def article_detail_view(request, slug=None, *args, **kargs):
     context = {
         'articlce_detail': articlce_detail
     }
-    return render(request, 'detail.html', context=context)
+    return render(request, 'articles/detail.html', context=context)
 
 
 def all_article_list(request, *args, **Kwargs):
@@ -75,4 +76,4 @@ def all_article_list(request, *args, **Kwargs):
     context = {
         "articles": articles
     }
-    return render(request, 'index.html', context)
+    return render(request, 'articles/index.html', context)

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{{objec.get_edite_url}}" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit">
+</form>
+
+{% endblock %}
+

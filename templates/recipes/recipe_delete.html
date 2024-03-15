@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{% url 'recipe:delete' delete_recipes.id %}" method="POST">
+    {% csrf_token %} 
+    <p>You are sure you want to delete is ("{{delete_recipes.name}}" ?)</p>
+    <input type="submit" value="Delete">
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<form action="{% url 'recipe:create' %}" method="POST">
+    {% csrf_token %}
+    {{forms.as_p}}
+    
+    <input type="submit"  value="Submit">
+</form>
+
+{% endblock %}

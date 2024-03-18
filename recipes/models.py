@@ -16,11 +16,13 @@ class Recipes(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
+    
         return self.name
 
     
     def get_recipe_detail_urls(self):
         return reverse('recipe:detail', kwargs={"id": self.id})
+    
     
     def get_recipe_list_url(self):
         return reverse("recipe:recipe-list")

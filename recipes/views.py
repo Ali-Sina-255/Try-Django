@@ -7,7 +7,7 @@ from django.forms.models import modelformset_factory
 
 @login_required
 def recipe_list_view(request):
-    all_recipes = Recipes.objects.filter(user=request.user)
+    all_recipes = Recipes.objects.filter(user=request.user).order_by('-timestamp')
     context = {
         'all_recipes': all_recipes
     }
@@ -36,10 +36,12 @@ def recipe_create_view(request):
         obj.user = request.user
         obj.save()
         return redirect(obj.get_recipe_list_url())
+    if request.htmx:
+        return render(request, 'recipes/partials/forms.html')
     return render(request, 'recipes/recipe_create.html', context)
 
 
-# Node for update we need to create form
+# Note for update we need to create form
 @login_required
 def recipe_update_views(request, value_from_url):
     object = get_object_or_404(
@@ -48,7 +50,7 @@ def recipe_update_views(request, value_from_url):
     form = RecipesForm(request.POST or None, instance=object)
     
     RecipeIngredientFormSet = modelformset_factory(RecipeIngredient,form=RecipeIngredientForm,extra=0)
-    qs = object.recipeIngredient_set.all()
+    qs = object.recipeingredient_set.all()
     formset = RecipeIngredientFormSet(request.POST or None, queryset=qs)
     
     context = {
@@ -58,24 +60,20 @@ def recipe_update_views(request, value_from_url):
     }
     if request.method == "POST":
         form = RecipesForm(request.POST, instance=object)
-        
         if all([form.is_valid(), formset.is_valid()]):
             parent= form.save(commit=False)
             parent.save()
             # formset.save()
             for form in formset:
                 child = form.save(commit=False)
-                if child.recipe is None:   
+                if child.recipes is None:   
                     print('Added new')
-                    child.recipe = parent
+                    child.recipes = parent
                 child.save()
             context["message"] = "Data Saved"
-            return redirect(object.get_recipe_list_url())
-        else:
-            print(form.errors)
-            form = RecipesForm()
-            # form_2 = RecipeIngredientForm()
-    
+            # return redirect(object.get_recipe_list_url())
+        if request.htmx:
+            return render(request, 'recipes/partials/forms.html', context)
     return render(request, 'recipes/recipe_update.html', context)
 
 

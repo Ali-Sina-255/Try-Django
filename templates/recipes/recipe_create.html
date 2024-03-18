@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<form action="{% url 'recipe:create' %}" method="POST">
+<form action="." method="POST" hx-post=".">
     {% csrf_token %}
     {{forms.as_p}}
     

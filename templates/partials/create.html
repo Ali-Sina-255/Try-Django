@@ -1,0 +1,6 @@
+<form action="." method="POST" hx-post="." hx-swap="outerHTML">
+    {% csrf_token %}
+    {{forms.as_p}}
+    
+    <input type="submit"  value="Submit">
+</form>

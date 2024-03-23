@@ -1,0 +1,27 @@
+
+
+<form action="" method="POST" hx-post="." hx-swap="outerHTML">
+    {% if message %}
+    
+    <p>{{ message }}</p>
+
+    {% endif %}
+
+
+    {% csrf_token %}
+    {% for field in form %}
+    
+        <div class="{% if field.field.required %} {{field.required_css_class}} {% endif %}">
+            {{field.label_tag}} 
+            {{field}}
+            {% if field.help_text %}
+                <p class="help">{{field.help_text|safe}}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <h1>RecipeIngredient</h1>
+
+    {{formset.as_p}}
+    <input type="submit">
+</form>

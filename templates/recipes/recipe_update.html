@@ -1,28 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
- {% if massage %}
- 
- <p>{{ message }}</p>
 
- {% endif %}
- </p>
-<form action="{{objec.get_edite_url}}" method="POST" hx-post=".">
-    {% csrf_token %}
-    {% for field in form %}
-    
-        <div class="{% if field.field.required %} {{field.required_css_class}} {% endif %}">
-            {{field.label_tag}} 
-            {{field}}
-            {% if field.help_text %}
-                <p class="help">{{field.help_text|safe}}</p>
-            {% endif %}
-        </div>
-    {% endfor %}
-    <h1>RecipeIngredient</h1>
-    {{formset.as_p}}
-    <input type="submit">
-</form>
+ {% include 'partials/from.html' %}
 
 {% endblock %}
 

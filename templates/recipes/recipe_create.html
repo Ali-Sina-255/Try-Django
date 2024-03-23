@@ -3,11 +3,6 @@
 
 {% block content %}
 
-<form action="." method="POST" hx-post=".">
-    {% csrf_token %}
-    {{forms.as_p}}
-    
-    <input type="submit"  value="Submit">
-</form>
+{% include 'partials/create.html' %}
 
 {% endblock %}

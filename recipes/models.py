@@ -23,7 +23,9 @@ class Recipes(models.Model):
     def get_recipe_detail_urls(self):
         return reverse('recipe:detail', kwargs={"id": self.id})
     
-    
+    def get_hx_url(self):
+        return reverse('recipe:hx-detail',kwargs={"id": self.id})
+
     def get_recipe_list_url(self):
         return reverse("recipe:recipe-list")
     
